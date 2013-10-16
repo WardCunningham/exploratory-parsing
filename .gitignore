@@ -14,3 +14,5 @@ tally.txt
 *#*
 .DS_Store
 *.swp
+breakdown.d
+breakdown.html

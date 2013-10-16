@@ -1,9 +1,10 @@
 #!/usr/bin/perl
 
 # usage
-#   cat tally.dot | perl ../scripts/breakdown-fmt.pl data/dir file | dot -Tsvg -otally.svg
-$dir = $ARGV[0];
+#   cat tally.dot | perl ../scripts/breakdown-fmt.pl run file | dot -Tsvg -otally.svg
+$run = $ARGV[0];
 $file = $ARGV[1];
+$dir = "../runs/$run/data";
 
 # compute offsets in data for single file in breakdown
 $offset = 0;
@@ -11,13 +12,24 @@ for (<$dir/*>) {
 	last if $_ =~ /$file/;
 	$offset += -s $_;
 }
+print STEDERR "$dir $file $offset\n";
 
 # format dot output (easier here than in c)
 for (<STDIN>) {
+	s/javascript:top\.samples\(\[(.*?)\]\);/offset()/geo;
 	s/".*?"/newline()/geo;
 	s/label = "(\d+)"/comma()/geo;
 	recolor() if /^}/;
 	print;
+}
+
+# relocate offset references to recent run
+sub offset {
+	my @args;
+	for (split(/,/,$1)) {
+		push(@args, $1+$offset . '-' . $2) if /(\d+)-(\d+)/;
+	}
+	"http://localhost:8080/runs/$run/offsets?offsets=" . join(',',@args)
 }
 
 # escape html
