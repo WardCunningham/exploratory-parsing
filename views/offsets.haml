@@ -5,6 +5,6 @@
   <h2><%= h text_block[:offset] %></h2>
   <div class="details">File: <%= h text_block[:filename].strip %> Offset: <%= h text_block[:position] %></div>
   <pre class="offset">
-  <span style="color:green;"><%= h( text_block[:prefix]) %></span><span style="color: green; background: yellow;"><%= h( text_block[:match]) %></span><span style="color: red;"><%= h( text_block[:sufix]) %></span>
+  <span style="color:black;"><%= h( text_block[:prefix]) %></span><span style="color: black; background: yellow;"><%= h( text_block[:match]) %></span><span style="color: gray;"><%= h( text_block[:sufix]) %></span>
   </pre>
   <% end %>
