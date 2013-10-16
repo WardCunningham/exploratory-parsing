@@ -1,4 +1,4 @@
-$KCODE = "U"
+# $KCODE = "U"
 require 'rubygems'
 require 'sinatra'
 require 'haml'
@@ -29,7 +29,13 @@ helpers do
     int.to_s.reverse.gsub(/...(?=.)/,'\&,').reverse
   end
 
+  def e(text)
+    return '' if text.nil?
+    text.encode('UTF-8', 'binary', invalid: :replace, undef: :replace)
+  end
+
 end
+
 
 def text_blocks_for_offset(run, offset, length)
   files = `ls runs/#{run}/data`
@@ -40,7 +46,7 @@ def text_blocks_for_offset(run, offset, length)
       return File.open("runs/#{run}/data/#{filename}", 'r') do |file|
         prefix = position < 1000 ? position : 1000
         file.sysseek position - prefix
-        {:filename => filename, :position => position, :offset => offset, :prefix => file.read(prefix), :match => file.read(length), :sufix => file.read(1000)}
+        {:filename => filename, :position => position, :offset => offset, :prefix => e(file.read(prefix)), :match => e(file.read(length)), :sufix => e(file.read(1000))}
       end
     else
       position -= filesize
