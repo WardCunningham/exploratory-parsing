@@ -194,3 +194,9 @@ get '/pr/code' do
   content_type 'text/plain'
   `pr -n -t parse.leg.c`
 end
+
+get '/sh/break' do
+  content_type 'text/html'
+  system("sh scripts/breakdown.sh")
+  `cat breakdown.html`
+end
