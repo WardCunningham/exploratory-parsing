@@ -18,6 +18,7 @@ print STEDERR "$dir $file $offset\n";
 for (<STDIN>) {
 	s/javascript:top\.samples\(\[(.*?)\]\);/offset()/geo;
 	s/".*?"/newline()/geo;
+	s/label = "(\d+)", /bold()/geo;
 	s/label = "(\d+)"/comma()/geo;
 	recolor() if /^}/;
 	print;
@@ -39,8 +40,15 @@ sub newline {
 	s/&/&amp;/g;
 	s/</&lt;/g;
 	s/ |_/\\n/g;
-	$o{$_}++ if /\bother\b/;
+	$o{$_}++ if /\b(other)\b/;
+	$a{$_}++ if /\b(all|any)\b/;
 	$_;
+}
+
+# bold lines for big numbers
+
+sub bold {
+	($1 < 1000) ? $& : $& . "penwidth=3, "
 }
 
 # add commas to number
@@ -54,5 +62,8 @@ sub comma {
 sub recolor {
     for (keys %o) {
         print "$_ [fillcolor=lightgray];\n";
+    }
+    for (keys %a) {
+        print "$_ [fillcolor=pink];\n";
     }
 }
