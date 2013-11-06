@@ -40,6 +40,7 @@ sub newline {
 	s/&/&amp;/g;
 	s/</&lt;/g;
 	s/ |_/\\n/g;
+	s/([a-z])([A-Z])/$1\\n$2/g;
 	$o{$_}++ if /\b(other)\b/;
 	$a{$_}++ if /\b(all|any)\b/;
 	$_;
