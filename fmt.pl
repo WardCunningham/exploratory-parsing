@@ -31,4 +31,5 @@ sub recolor {
     for (keys %o) {
         print "$_ [fillcolor=lightgray];\n";
     }
+    print "\"/root/\" [shape=point fillcolor=black];\n";
 }

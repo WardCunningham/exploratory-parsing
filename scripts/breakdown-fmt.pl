@@ -66,4 +66,5 @@ sub recolor {
     for (keys %a) {
         print "$_ [fillcolor=pink];\n";
     }
+    print "\"/root/\" [shape=point fillcolor=black];\n";
 }
