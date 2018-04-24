@@ -13,7 +13,7 @@
       - (classes << :current) if run == session[:run]
       %tr{ :class => classes.join(" "), :id => run }
         %td
-          %a{ :href => "runs/#{run}" }= run[8..13]
+          %a{ :href => "/runs/#{run}" }= run[8..13]
         - leg = begin File.read "runs/#{run}/parse.leg" rescue "" end
         %td{ :class => 'leg', :align => 'right' }
           = leg.length
@@ -21,7 +21,7 @@
           = $1 if leg =~ /(\w+)/
         %td{ :align => 'right' }
           - offset = begin File.read("runs/#{run}/tally.txt").strip rescue "" end
-          %a{ :href => ("runs/#{run}/offsets?offsets=#{offset}-0") }
+          %a{ :href => ("/runs/#{run}/offsets?offsets=#{offset}-0") }
             = n offset
         %td{ :align => 'right' }
           = begin File.size "runs/#{run}/tally.dot" rescue "" end
