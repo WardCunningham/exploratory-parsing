@@ -6,6 +6,7 @@ require 'fileutils'
 require "diffy"
 
 set :port, 8080
+set :bind, '0.0.0.0'
 enable :sessions
 
 FileUtils.mkdir_p "runs"
@@ -73,7 +74,7 @@ get %r{/runs/([\d]+)/bindings} do |run|
     :type => "text/plain"
 end
 
-get %r{/runs/([\d]+)$} do |run|
+get %r{/runs/([\d]+)} do |run|
   @run = run
   @log = File.read("runs/#{run}/output.log")
   @grammar = File.read("runs/#{run}/parse.leg")
